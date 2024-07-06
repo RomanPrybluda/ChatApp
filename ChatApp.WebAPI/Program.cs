@@ -1,7 +1,11 @@
 using ChatApp.DAL;
+using ChatApp.DOMAIN;
+using ChatApp.WebAPI;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ChatService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -14,6 +18,8 @@ builder.Services.AddDbContext<ChatAppDbContext>(options =>
 });
 
 builder.Logging.AddConsole();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -32,8 +38,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chat");
+
 
 app.Run();
