@@ -13,11 +13,26 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ChatAppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(ChatAppDbContext)),
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString(nameof(ChatAppDbContext)),
         b => b.MigrationsAssembly("ChatApp.DAL"));
+
+
+
 });
 
 builder.Logging.AddConsole();
+
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy("CORSPolicy", builder =>
+
+    builder.AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        .SetIsOriginAllowed((hosts) => true));
+});
 
 builder.Services.AddSignalR();
 
@@ -36,15 +51,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("CORSPolicy");
+
+app.UseRouting();
+
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
 
-app.UseAuthorization();
-
 app.MapControllers();
-app.MapHub<ChatHub>("/chat");
 
+app.MapHub<ChatHub>("chat-hub");
 
 app.Run();

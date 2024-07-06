@@ -22,6 +22,8 @@ namespace ChatApp.DAL
 
             new UserChatConfiguration().Configure(modelBuilder.Entity<UserChat>());
 
+            new ChatConfiguration().Configure(modelBuilder.Entity<Chat>());
+
             base.OnModelCreating(modelBuilder);
 
         }

@@ -34,9 +34,14 @@ namespace ChatApp.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CreatorUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ChatId");
 
-                    b.ToTable("Chats");
+                    b.HasIndex("CreatorUserId");
+
+                    b.ToTable("Chat", (string)null);
                 });
 
             modelBuilder.Entity("ChatApp.DAL.Message", b =>
@@ -57,9 +62,14 @@ namespace ChatApp.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("MessageId");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Messages");
                 });
@@ -89,11 +99,27 @@ namespace ChatApp.DAL.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId", "ChatId");
 
                     b.HasIndex("ChatId");
 
+                    b.HasIndex("UserId1");
+
                     b.ToTable("UserChat", (string)null);
+                });
+
+            modelBuilder.Entity("ChatApp.DAL.Chat", b =>
+                {
+                    b.HasOne("ChatApp.DAL.User", "Creator")
+                        .WithMany("CreatedChats")
+                        .HasForeignKey("CreatorUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("ChatApp.DAL.Message", b =>
@@ -104,7 +130,15 @@ namespace ChatApp.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ChatApp.DAL.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Chat");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ChatApp.DAL.UserChat", b =>
@@ -116,10 +150,14 @@ namespace ChatApp.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("ChatApp.DAL.User", "User")
-                        .WithMany("UserChats")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ChatApp.DAL.User", null)
+                        .WithMany("UserChats")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Chat");
 
@@ -135,6 +173,8 @@ namespace ChatApp.DAL.Migrations
 
             modelBuilder.Entity("ChatApp.DAL.User", b =>
                 {
+                    b.Navigation("CreatedChats");
+
                     b.Navigation("UserChats");
                 });
 #pragma warning restore 612, 618

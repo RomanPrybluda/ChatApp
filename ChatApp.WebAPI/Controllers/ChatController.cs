@@ -32,9 +32,9 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateChatAsync([Required][FromBody] CreateChatDTO request)
+        public async Task<ActionResult> CreateChatAsync([Required][FromBody] CreateChatDTO request, int userId)
         {
-            var chat = await _chatService.CreateChatAsync(request);
+            var chat = await _chatService.CreateChatAsync(request, userId);
             return Ok(chat);
         }
 
@@ -46,9 +46,9 @@ namespace ChatApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteChatAsync(int id)
+        public async Task<ActionResult> DeleteChatAsync(int id, int userId)
         {
-            await _chatService.DeleteChatAsync(id);
+            await _chatService.DeleteChatAsync(id, userId);
             return NoContent();
         }
     }

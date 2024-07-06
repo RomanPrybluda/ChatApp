@@ -9,6 +9,7 @@
         UserIsAlreadyExists = 5,
 
         ChatIsAlreadyExists = 21,
+        NoPermissions = 22
 
     }
 }

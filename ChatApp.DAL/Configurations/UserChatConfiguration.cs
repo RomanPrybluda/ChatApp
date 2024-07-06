@@ -25,6 +25,11 @@ namespace ChatApp.DAL
                 .WithMany(c => c.UserChats)
                 .HasForeignKey(uc => uc.ChatId);
 
+            builder
+                .HasOne(m => m.User)
+                .WithMany()
+                .HasForeignKey(m => m.UserId);
+
         }
     }
 }
