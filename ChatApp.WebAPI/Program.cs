@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ChatService>();
 
 builder.Services.AddControllers();
@@ -16,8 +17,6 @@ builder.Services.AddDbContext<ChatAppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString(nameof(ChatAppDbContext)),
         b => b.MigrationsAssembly("ChatApp.DAL"));
-
-
 
 });
 
@@ -43,6 +42,12 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ChatAppDbContext>();
     context.Database.Migrate();
+
+    var userInitializer = new UserInitializer(context);
+    userInitializer.InitializeUsers();
+
+    var chatInitializer = new ChatInitializer(context);
+    chatInitializer.InitializeChats();
 }
 
 if (app.Environment.IsDevelopment())
