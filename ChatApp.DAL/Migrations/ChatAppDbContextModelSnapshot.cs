@@ -99,14 +99,9 @@ namespace ChatApp.DAL.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("UserId", "ChatId");
 
                     b.HasIndex("ChatId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("UserChat", (string)null);
                 });
@@ -150,14 +145,10 @@ namespace ChatApp.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("ChatApp.DAL.User", "User")
-                        .WithMany()
+                        .WithMany("UserChats")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ChatApp.DAL.User", null)
-                        .WithMany("UserChats")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Chat");
 

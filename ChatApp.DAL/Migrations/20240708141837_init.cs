@@ -77,8 +77,7 @@ namespace ChatApp.DAL.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ChatId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<int>(type: "int", nullable: true)
+                    ChatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,11 +94,6 @@ namespace ChatApp.DAL.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserChat_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -121,11 +115,6 @@ namespace ChatApp.DAL.Migrations
                 name: "IX_UserChat_ChatId",
                 table: "UserChat",
                 column: "ChatId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserChat_UserId1",
-                table: "UserChat",
-                column: "UserId1");
         }
 
         /// <inheritdoc />

@@ -7,13 +7,11 @@ namespace ChatApp.DAL
     {
         public void Configure(EntityTypeBuilder<UserChat> builder)
         {
-
             builder
                 .ToTable("UserChat");
 
             builder
                 .HasKey(uc => new { uc.UserId, uc.ChatId });
-
 
             builder
                 .HasOne(uc => uc.User)
@@ -24,12 +22,6 @@ namespace ChatApp.DAL
                 .HasOne(uc => uc.Chat)
                 .WithMany(c => c.UserChats)
                 .HasForeignKey(uc => uc.ChatId);
-
-            builder
-                .HasOne(m => m.User)
-                .WithMany()
-                .HasForeignKey(m => m.UserId);
-
         }
     }
 }

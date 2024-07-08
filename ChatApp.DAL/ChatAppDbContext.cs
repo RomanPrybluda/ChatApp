@@ -20,9 +20,9 @@ namespace ChatApp.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            new UserChatConfiguration().Configure(modelBuilder.Entity<UserChat>());
-
             new ChatConfiguration().Configure(modelBuilder.Entity<Chat>());
+
+            new UserChatConfiguration().Configure(modelBuilder.Entity<UserChat>());
 
             base.OnModelCreating(modelBuilder);
 
