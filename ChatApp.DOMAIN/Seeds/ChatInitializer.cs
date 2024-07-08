@@ -33,13 +33,21 @@ public class ChatInitializer
                 if (userIds.Count == 0)
                     break;
 
-
                 int randomUserId = userIds[random.Next(userIds.Count)];
 
-                _context.Chats.Add(new Chat
+                var chat = new Chat
                 {
                     ChatName = chatNames[i % chatNames.Count],
                     CreatorUserId = randomUserId
+                };
+
+                _context.Chats.Add(chat);
+
+                // Add entry to UserChat table
+                _context.UserChats.Add(new UserChat
+                {
+                    UserId = randomUserId,
+                    Chat = chat
                 });
             }
 
