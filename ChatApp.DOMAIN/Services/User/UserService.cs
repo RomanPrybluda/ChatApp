@@ -29,7 +29,7 @@ namespace ChatApp.DOMAIN
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"User id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound, $"User with id:{id} wasn't found.");
 
             var userDTO = UserDTO.UserToUserDTO(user);
 
@@ -38,6 +38,11 @@ namespace ChatApp.DOMAIN
 
         public async Task<UserDTO> CreateUserAsync(CreateUserDTO request)
         {
+            var userByName = await _context.Users.FirstOrDefaultAsync(c => c.UserName == request.UserName);
+
+            if (userByName != null)
+                throw new CustomException(CustomExceptionType.UserIsAlreadyExists, "User already exists.");
+
             var user = CreateUserDTO.CreateUserDTOToUser(request);
 
             _context.Users.Add(user);
@@ -54,7 +59,7 @@ namespace ChatApp.DOMAIN
             var userById = await _context.Users.FindAsync(id);
 
             if (userById == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"User id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound, $"User with id:{id} wasn't found.");
 
             UpdateUserDTO.UpdateUser(userById, request);
 
@@ -71,7 +76,7 @@ namespace ChatApp.DOMAIN
             var userById = await _context.Users.FindAsync(id);
 
             if (userById == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"User id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound, $"User with id:{id} wasn't found.");
 
             _context.Users.Remove(userById);
             await _context.SaveChangesAsync();

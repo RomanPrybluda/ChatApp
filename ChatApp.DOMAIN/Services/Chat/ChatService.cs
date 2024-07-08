@@ -30,7 +30,7 @@ namespace ChatApp.DOMAIN
                 .FirstOrDefaultAsync(c => c.ChatId == id);
 
             if (chat == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"Chat id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound, $"Chat with id:{id} wasn't found.");
 
             var chatDTO = ChatByIdDTO.ChatToChatByIdDTO(chat);
 
@@ -39,12 +39,12 @@ namespace ChatApp.DOMAIN
 
         public async Task<ChatDTO> CreateChatAsync(CreateChatDTO request, int userId)
         {
-            var chatByFullName = await _context.Chats.FirstOrDefaultAsync(c => c.ChatName == request.ChatName);
+            var chatByName = await _context.Chats.FirstOrDefaultAsync(c => c.ChatName == request.ChatName);
 
-            if (chatByFullName != null)
+            if (chatByName != null)
                 throw new CustomException(CustomExceptionType.ChatIsAlreadyExists, "Chat already exists.");
 
-            var chat = CreateChatDTO.CreateChatDTOToChat(request);
+            var chat = CreateChatDTO.CreateChatDTOToChat(request, userId);
 
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
@@ -60,7 +60,7 @@ namespace ChatApp.DOMAIN
             var chatById = await _context.Chats.FindAsync(id);
 
             if (chatById == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"Chat id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound, $"Chat with id:{id} wasn't found.");
 
             UpdateChatDTO.UpdateChat(chatById, request);
 
@@ -77,7 +77,7 @@ namespace ChatApp.DOMAIN
             var chatById = await _context.Chats.FindAsync(id);
 
             if (chatById == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"Chat id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound, $"Chat with id:{id} wasn't found.");
 
             if (chatById.CreatorUserId != userId)
                 throw new CustomException(CustomExceptionType.NoPermissions, "No permissions to perform the operation.");

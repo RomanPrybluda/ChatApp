@@ -50,6 +50,9 @@ using (var scope = app.Services.CreateScope())
     var chatInitializer = new ChatInitializer(context);
     chatInitializer.InitializeChats();
 
+    var messageInitializer = new MessageInitializer(context);
+    messageInitializer.InitializeMessages();
+
 }
 
 if (app.Environment.IsDevelopment())

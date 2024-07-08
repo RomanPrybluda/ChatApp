@@ -5,9 +5,13 @@ namespace ChatApp.DOMAIN
     public class MessageDTO
     {
         public int MessageId { get; set; }
-        public string Text { get; set; }
+
+        public string Text { get; set; } = null!;
+
         public DateTime SentAt { get; set; }
+
         public int ChatId { get; set; }
+
         public int UserId { get; set; }
 
         public static MessageDTO MessageToMessageDTO(Message message)

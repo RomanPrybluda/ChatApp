@@ -5,7 +5,9 @@ namespace ChatApp.DOMAIN
     public class CreateMessageDTO
     {
         public string Text { get; set; } = string.Empty;
+
         public int ChatId { get; set; }
+
         public int UserId { get; set; }
 
         public static Message CreateMessageDTOToMessage(CreateMessageDTO dto)
@@ -14,8 +16,7 @@ namespace ChatApp.DOMAIN
             {
                 Text = dto.Text,
                 ChatId = dto.ChatId,
-                UserId = dto.UserId,
-                SentAt = DateTime.UtcNow
+                UserId = dto.UserId
             };
         }
     }

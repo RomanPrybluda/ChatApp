@@ -16,17 +16,17 @@ namespace ChatApp.WebAPI
             _messageService = messageService;
         }
 
-        [HttpGet("{chatId}")]
-        public async Task<ActionResult> GetAllChatMessagesAsync([Required] int chatId)
+        [HttpGet("chat/{id}")]
+        public async Task<ActionResult> GetAllChatMessagesAsync([Required] int id)
         {
-            var messages = await _messageService.GetAllChatMessagesAsync(chatId);
+            var messages = await _messageService.GetAllChatMessagesAsync(id);
             return Ok(messages);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult> GetAllUserMessagesAsync([Required] int userId)
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult> GetAllUserMessagesAsync([Required] int id)
         {
-            var messages = await _messageService.GetAllUserMessagesAsync(userId);
+            var messages = await _messageService.GetAllUserMessagesAsync(id);
             return Ok(messages);
         }
 
