@@ -4,14 +4,11 @@ namespace ChatApp.DOMAIN
 {
     public class MessageDTO
     {
-
         public int MessageId { get; set; }
-
         public string Text { get; set; }
-
         public DateTime SentAt { get; set; }
-
-        public string UserName { get; set; }
+        public int ChatId { get; set; }
+        public int UserId { get; set; }
 
         public static MessageDTO MessageToMessageDTO(Message message)
         {
@@ -20,7 +17,8 @@ namespace ChatApp.DOMAIN
                 MessageId = message.MessageId,
                 Text = message.Text,
                 SentAt = message.SentAt,
-                UserName = message.User.UserName
+                ChatId = message.ChatId,
+                UserId = message.UserId
             };
         }
     }

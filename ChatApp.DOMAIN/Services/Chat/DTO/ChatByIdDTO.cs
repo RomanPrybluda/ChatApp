@@ -11,7 +11,7 @@ namespace ChatApp.DOMAIN
 
         public int CreatorId { get; set; }
 
-        public List<MessageDTO> Messages { get; set; } = new List<MessageDTO>();
+        public List<ChatMessageDTO> Messages { get; set; } = new List<ChatMessageDTO>();
 
         public static ChatByIdDTO ChatToChatByIdDTO(Chat chat)
         {
@@ -20,7 +20,7 @@ namespace ChatApp.DOMAIN
                 ChatId = chat.ChatId,
                 ChatName = chat.ChatName,
                 CreatorId = chat.CreatorUserId,
-                Messages = chat.Messages.Select(MessageDTO.MessageToMessageDTO).ToList()
+                Messages = chat.Messages.Select(ChatMessageDTO.MessageToMessageDTO).ToList()
             };
         }
 

@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ChatService>();
+builder.Services.AddScoped<MessageService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -48,6 +49,7 @@ using (var scope = app.Services.CreateScope())
 
     var chatInitializer = new ChatInitializer(context);
     chatInitializer.InitializeChats();
+
 }
 
 if (app.Environment.IsDevelopment())
