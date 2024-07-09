@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChatApp.DAL\ChatApp.DAL.csproj" />
-    <ProjectReference Include="..\ChatApp.DOMAIN\ChatApp.DOMAIN.csproj" />
+	<ProjectReference Include="..\ChatApp.DOMAIN\ChatApp.DOMAIN.csproj" />
   </ItemGroup>
 
   <ItemGroup>

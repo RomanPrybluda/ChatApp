@@ -7,11 +7,11 @@ namespace ChatApp.DOMAIN
 
         public int MessageId { get; set; }
 
-        public string Text { get; set; }
+        public string Text { get; set; } = null!;
 
         public DateTime SentAt { get; set; }
 
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         public static ChatMessageDTO MessageToMessageDTO(Message message)
         {
@@ -20,7 +20,7 @@ namespace ChatApp.DOMAIN
                 MessageId = message.MessageId,
                 Text = message.Text,
                 SentAt = message.SentAt,
-                UserName = message.User.UserName
+                UserName = message.User?.UserName ?? "Unknown User"
             };
         }
     }

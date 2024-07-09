@@ -62,7 +62,9 @@ namespace ChatApp.DOMAIN
 
         public async Task<ChatMessageDTO> UpdateMessageAsync(int id, UpdateMessageDTO request)
         {
-            var message = await _context.Messages.FindAsync(id);
+            var message = await _context.Messages
+                .Include(m => m.User)
+                .FirstOrDefaultAsync(m => m.MessageId == id);
 
             if (message == null)
                 throw new CustomException(CustomExceptionType.NotFound, $"Message id:{id} wasn't found.");

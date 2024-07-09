@@ -18,7 +18,6 @@ namespace ChatApp.WebAPI
             await Clients.All.ReceiveMessage($"{Context.ConnectionId}: {message}");
         }
 
-
         //public async Task SendMessage(string user, string message)
         //{
         //    await Clients.All.SendAsync("ReceiveMessage", user, message);
@@ -29,16 +28,10 @@ namespace ChatApp.WebAPI
         //    await Clients.All.SendAsync("ReceiveNotification", content);
         //}
 
-
-
         //public async Task SendNotification(string content)
         //{
         //    await Clients.All.ReceiveNotification(content);
         //}
-
-
-
-
 
         //public override async Task OnConnectedAsync()
         //{
@@ -52,16 +45,11 @@ namespace ChatApp.WebAPI
         //    await base.OnDisconnectedAsync(exception);
         //}
 
-
-
-
         //public async Task JoinChat()
         //{
         //    await Clients.Caller.SendAsync("ReceiveMessage", $"{Context.ConnectionId} has joined");
         //    await base.OnConnectedAsync();
         //}
-
-
 
 
         //public async Task SendMessage(string user, string message)
