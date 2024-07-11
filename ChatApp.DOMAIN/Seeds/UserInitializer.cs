@@ -1,21 +1,23 @@
 ﻿using ChatApp.DAL;
 
-public class UserInitializer
+namespace ChatApp.DOMAIN
 {
-    private readonly ChatAppDbContext _context;
-
-    public UserInitializer(ChatAppDbContext context)
+    public class UserInitializer
     {
-        _context = context;
-    }
+        private readonly ChatAppDbContext _context;
 
-    public void InitializeUsers()
-    {
-        int userCount = _context.Users.Count();
-
-        if (userCount < 50)
+        public UserInitializer(ChatAppDbContext context)
         {
-            var userNames = new List<string>
+            _context = context;
+        }
+
+        public void InitializeUsers()
+        {
+            int userCount = _context.Users.Count();
+
+            if (userCount < 50)
+            {
+                var userNames = new List<string>
             {
                 "Alice", "Bob", "Charlie", "David", "Eve",
                 "Frank", "Grace", "Hank", "Ivy", "Jack",
@@ -28,17 +30,18 @@ public class UserInitializer
                 "Olivia", "Pete", "Quinn", "Rachel", "Steve"
             };
 
-            int usersToCreate = 50 - userCount;
+                int usersToCreate = 50 - userCount;
 
-            for (int i = 0; i < usersToCreate; i++)
-            {
-                _context.Users.Add(new User
+                for (int i = 0; i < usersToCreate; i++)
                 {
-                    UserName = userNames[i % userNames.Count]
-                });
-            }
+                    _context.Users.Add(new User
+                    {
+                        UserName = userNames[i % userNames.Count]
+                    });
+                }
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
         }
     }
 }

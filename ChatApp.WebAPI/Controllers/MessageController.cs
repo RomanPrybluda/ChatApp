@@ -40,7 +40,7 @@ namespace ChatApp.WebAPI
         [HttpPost]
         public async Task<ActionResult> AddMessageAsync([Required][FromBody] CreateMessageDTO request)
         {
-            var message = await _messageService.AddMessageAsync(request);
+            var message = await _messageService.CreateMessageAsync(request);
             return Ok(message);
         }
 

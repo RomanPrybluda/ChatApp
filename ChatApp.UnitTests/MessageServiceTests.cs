@@ -63,7 +63,7 @@ namespace ChatApp.UnitTests
                 ChatId = GetExistingChatId()
             };
 
-            _addedMessage = await _messageService.AddMessageAsync(createMessageDto);
+            _addedMessage = await _messageService.CreateMessageAsync(createMessageDto);
 
             Assert.NotNull(_addedMessage);
             Assert.Equal(createMessageDto.Text, _addedMessage.Text);

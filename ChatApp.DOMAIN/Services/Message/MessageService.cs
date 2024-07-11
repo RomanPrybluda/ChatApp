@@ -39,7 +39,7 @@ namespace ChatApp.DOMAIN
             return messages.Select(MessageDTO.MessageToMessageDTO).ToList();
         }
 
-        public async Task<MessageDTO> AddMessageAsync(CreateMessageDTO request)
+        public async Task<MessageDTO> CreateMessageAsync(CreateMessageDTO request)
         {
 
             var userById = await _context.Users.FirstOrDefaultAsync(c => c.UserId == request.UserId);

@@ -1,23 +1,25 @@
 ﻿using ChatApp.DAL;
 
-public class ChatInitializer
+namespace ChatApp.DOMAIN
 {
-    private readonly ChatAppDbContext _context;
-
-    public ChatInitializer(ChatAppDbContext context)
+    public class ChatInitializer
     {
-        _context = context;
-    }
+        private readonly ChatAppDbContext _context;
 
-    public void InitializeChats()
-    {
-        int chatCount = _context.Chats.Count();
-
-        if (chatCount < 20)
+        public ChatInitializer(ChatAppDbContext context)
         {
-            int chatsToCreate = 20 - chatCount;
+            _context = context;
+        }
 
-            var chatNames = new List<string>
+        public void InitializeChats()
+        {
+            int chatCount = _context.Chats.Count();
+
+            if (chatCount < 20)
+            {
+                int chatsToCreate = 20 - chatCount;
+
+                var chatNames = new List<string>
             {
                 "General", "Random", "Sports", "Movies", "Music",
                 "Tech", "Gaming", "Books", "Travel", "Food",
@@ -25,33 +27,34 @@ public class ChatInitializer
                 "Parenting", "Relationships", "Pets", "Hobbies", "Events"
             };
 
-            var userIds = _context.Users.Select(u => u.UserId).ToList();
-            var random = new Random();
+                var userIds = _context.Users.Select(u => u.UserId).ToList();
+                var random = new Random();
 
-            for (int i = 0; i < chatsToCreate; i++)
-            {
-                if (userIds.Count == 0)
-                    break;
-
-                int randomUserId = userIds[random.Next(userIds.Count)];
-
-                var chat = new Chat
+                for (int i = 0; i < chatsToCreate; i++)
                 {
-                    ChatName = chatNames[i % chatNames.Count],
-                    CreatorUserId = randomUserId
-                };
+                    if (userIds.Count == 0)
+                        break;
 
-                _context.Chats.Add(chat);
+                    int randomUserId = userIds[random.Next(userIds.Count)];
 
-                // Add entry to UserChat table
-                _context.UserChats.Add(new UserChat
-                {
-                    UserId = randomUserId,
-                    Chat = chat
-                });
+                    var chat = new Chat
+                    {
+                        ChatName = chatNames[i % chatNames.Count],
+                        CreatorUserId = randomUserId
+                    };
+
+                    _context.Chats.Add(chat);
+
+                    // Add entry to UserChat table
+                    _context.UserChats.Add(new UserChat
+                    {
+                        UserId = randomUserId,
+                        Chat = chat
+                    });
+                }
+
+                _context.SaveChanges();
             }
-
-            _context.SaveChanges();
         }
     }
 }
