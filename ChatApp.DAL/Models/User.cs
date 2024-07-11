@@ -7,9 +7,9 @@
 
         public string UserName { get; set; } = string.Empty;
 
-        public ICollection<UserChat>? UserChats { get; set; }
+        public ICollection<UserChat> UserChats { get; set; }
 
-        public ICollection<Chat>? CreatedChats { get; set; }
+        public ICollection<Chat> CreatedChats { get; set; }
 
     }
 }
