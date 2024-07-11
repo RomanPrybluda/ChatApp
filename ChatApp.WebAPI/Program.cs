@@ -29,4 +29,6 @@ app.MapHub<ChatHub>("/chat-hub");
 
 app.UseCors("CORSPolicy");
 
+app.Services.DatabaseMigrate();
+
 app.Run();
