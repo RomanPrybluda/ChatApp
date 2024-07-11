@@ -8,6 +8,7 @@ namespace ChatApp.UnitTests
     {
         private readonly UserService _userService;
         private readonly ChatAppDbContext _context;
+        public UserDTO _addedUser;
 
         public UserServiceTests()
         {

@@ -8,7 +8,7 @@ namespace ChatApp.UnitTests
     {
         private readonly MessageService _messageService;
         private readonly ChatAppDbContext _context;
-        private MessageDTO _addedMessage;
+        public MessageDTO _addedMessage;
 
         public MessageServiceTests()
         {
