@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChatApp.Controllers
 {
-    [ApiController]
-    [Produces("application/json")]
+
     [Route("user")]
     public class UserController : ControllerBase
     {
